@@ -1,0 +1,25 @@
+
+########################################################################
+#      Date:           Thu Dec  6 18:02:42 PST 2018
+#    Job ID:           205265.c009
+#      User:           u20874
+# Resources:           neednodes=1:ppn=2,nodes=1:ppn=2,vmem=92gb,walltime=06:00:00
+########################################################################
+
+Your score on validation data: 1.8415
+==================================================
+[60  / 100] Baseline: 2.6795 
+[80  / 100] Baseline: 1.9034 
+                          <- You're here (80pts)
+[90  / 100] Baseline: 1.7830 
+[100 / 100] Baseline: 1.7345 
+[  BONUS  ] Baseline: 1.6737 
+
+ATTENTION! This submission/score is generated from validation data, 
+you may get 0pts if you submit it on Canvas!
+
+########################################################################
+# End of output for job 205265.c009
+# Date: Thu Dec  6 18:03:00 PST 2018
+########################################################################
+
