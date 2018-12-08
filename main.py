@@ -20,7 +20,7 @@ def build_model(embedding_dim, hidden_size, drop, sequence_length, vocabulary_si
     inputs = Input(shape=(sequence_length,), dtype='int32')
     # inputs -> [batch_size, sequence_length]
 
-    emb_layer = Embedding(input_dim=vocabulary_size, output_dim=embedding_dim, weights=[embedding_matrix], input_length=sequence_length, trainable = False)
+    emb_layer = Embedding(input_dim=vocabulary_size, output_dim=embedding_dim, weights=[embedding_matrix], input_length=sequence_length, trainable = True)
     # emb_layer.trainable = False
     # if you uncomment this line, the embeddings will be untrainable
 
