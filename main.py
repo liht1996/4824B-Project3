@@ -4,9 +4,10 @@ import json
 import os
 import time
 from keras.models import Model, load_model
-from keras.layers import Input, Dense, Embedding, Dropout, TimeDistributed, ConvLSTM2D, GRU
-from keras.layers import LSTM
+from keras.layers import Input, Dense, Embedding, Dropout, TimeDistributed, ConvLSTM2D, GRU, Bidirectional
+from keras.layers import LSTM, concatenate
 from keras.optimizers import Adam
+from keras.regularizers import l1, l2, l1_l2
 import numpy as np
 from data_helper import load_data, build_input_data
 from scorer import scoring
@@ -28,21 +29,23 @@ def build_model(embedding_dim, hidden_size, drop, sequence_length, vocabulary_si
 
     drop_embed = Dropout(drop)(embedding)
     # dropout at embedding layer
+    
+    dense_embed = Dense(units=vocabulary_size, activation='softmax')(drop_embed)
 
     # add a LSTM here, set units=hidden_size, dropout=drop, recurrent_dropout = drop, return_sequences=True
     # please read https://keras.io/layers/recurrent/
-    lstm_out_1 = GRU(units=hidden_size, dropout=drop, recurrent_dropout=drop, return_sequences=True)(drop_embed)
+    lstm_out_1 = GRU(units=hidden_size, dropout=drop, recurrent_dropout=drop, return_sequences=True)(dense_embed)
     # lstm_out_1 -> [batch_size, sequence_length, hidden_size]
     drop_lstm_1 = Dropout(drop)(lstm_out_1)
     
-    lstm_out_2 = GRU(units=hidden_size, dropout=drop, recurrent_dropout=drop, return_sequences=True)(drop_lstm_1)
+    lstm_out_2 = GRU(units=hidden_size, dropout=drop, recurrent_dropout=drop, return_sequences=True)(concatenate([embedding, drop_lstm_1], axis=2))
     # lstm_out_1 -> [batch_size, sequence_length, hidden_size]
     drop_lstm_2 = Dropout(drop)(lstm_out_2)
 
     # add a TimeDistributed here, set units=hidden_size, dropout=drop, recurrent_dropout = drop, return_sequences=True
     # please read  https://keras.io/layers/wrappers/
     # output: outputs -> [batch_size, sequence_length, vocabulary_size]
-    outputs = TimeDistributed(Dense(units=vocabulary_size, activation='softmax'))(drop_lstm_2)
+    outputs = TimeDistributed(Dense(units=vocabulary_size, activation='softmax'))(concatenate([embedding, drop_lstm_2], axis=2))
 
     # End of Model Architecture
     # ----------------------------------------#
