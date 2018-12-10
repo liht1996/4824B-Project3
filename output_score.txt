@@ -1,12 +1,12 @@
 
 ########################################################################
-#      Date:           Sat Dec  8 04:48:14 PST 2018
-#    Job ID:           206061.c009
+#      Date:           Sun Dec  9 18:17:05 PST 2018
+#    Job ID:           27.c009
 #      User:           u20874
-# Resources:           neednodes=1:ppn=2,nodes=1:ppn=2,vmem=92gb,walltime=06:00:00
+# Resources:           neednodes=1:ppn=2,nodes=1:ppn=2,walltime=06:00:00
 ########################################################################
 
-Your score on validation data: 1.7571
+Your score on validation data: 1.7496
 ==================================================
 [60  / 100] Baseline: 2.6795 
 [80  / 100] Baseline: 1.9034 
@@ -19,7 +19,7 @@ ATTENTION! This submission/score is generated from validation data,
 you may get 0pts if you submit it on Canvas!
 
 ########################################################################
-# End of output for job 206061.c009
-# Date: Sat Dec  8 04:48:24 PST 2018
+# End of output for job 27.c009
+# Date: Sun Dec  9 18:17:12 PST 2018
 ########################################################################
 
