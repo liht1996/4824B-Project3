@@ -37,15 +37,15 @@ def build_model(embedding_dim, hidden_size, drop, sequence_length, vocabulary_si
     lstm_out_1 = GRU(units=hidden_size, dropout=drop, recurrent_dropout=drop, return_sequences=True)(dense_embed)
     # lstm_out_1 -> [batch_size, sequence_length, hidden_size]
     drop_lstm_1 = Dropout(drop)(lstm_out_1)
-    
-    lstm_out_2 = GRU(units=hidden_size, dropout=drop, recurrent_dropout=drop, return_sequences=True)(concatenate([embedding, drop_lstm_1], axis=2))
+    dense_lstm_1 = Dense(units=vocabulary_size, activation='softmax')(drop_lstm_1)
+    lstm_out_2 = GRU(units=hidden_size, dropout=drop, recurrent_dropout=drop, return_sequences=True)(concatenate([embedding, dense_lstm_1], axis=2))
     # lstm_out_1 -> [batch_size, sequence_length, hidden_size]
     drop_lstm_2 = Dropout(drop)(lstm_out_2)
 
     # add a TimeDistributed here, set units=hidden_size, dropout=drop, recurrent_dropout = drop, return_sequences=True
     # please read  https://keras.io/layers/wrappers/
     # output: outputs -> [batch_size, sequence_length, vocabulary_size]
-    outputs = TimeDistributed(Dense(units=vocabulary_size, activation='softmax'))(concatenate([embedding, drop_lstm_2], axis=2))
+    outputs = TimeDistributed(Dense(units=vocabulary_size, activation='softmax'))(concatenate([embedding,drop_lstm_1,drop_lstm_2], axis=2))
 
     # End of Model Architecture
     # ----------------------------------------#
